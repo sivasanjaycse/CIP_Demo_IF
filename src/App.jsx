@@ -7,8 +7,16 @@ export default function App() {
   const [stage, setStage] = useState("System Ready");
   const [result, setResult] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  
+
+  // LOGGER STATE
+  const [logs, setLogs] = useState([]);
+
+  // FUTURE BACKEND INTEGRATION
+  // This will store the job_id returned from backend
+  // const [jobId, setJobId] = useState(null);
+
   const intervalRef = useRef(null);
+  const logConsoleRef = useRef(null);
 
   const stages = [
     { name: "Initializing Listeners...", progress: 15 },
@@ -21,53 +29,163 @@ export default function App() {
     { name: "Loading Results...", progress: 100 },
   ];
 
-  // Cleanup interval on unmount to prevent memory leaks
+  // Cleanup interval
   useEffect(() => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
+  // AUTO SCROLL LOGGER
+  useEffect(() => {
+    if (logConsoleRef.current) {
+      logConsoleRef.current.scrollTop =
+        logConsoleRef.current.scrollHeight;
+    }
+  }, [logs]);
+
+  // LOGGER FUNCTION
+  const addLog = (message) => {
+    const timestamp = new Date().toLocaleTimeString();
+    setLogs((prev) => [...prev, `[${timestamp}] ${message}`]);
+  };
+
   const startSimulation = () => {
-    if (isAnalyzing) return; // Prevent double clicks
-    
-    // FUTURE BACKEND INTEGRATION
-    // Call backend endpoint here
-    // Example:
-    // fetch('/start-job', { method: 'POST'})
-    //   .then(res => res.json())
-    //   .then(data => store job_id)
+    if (isAnalyzing) return;
 
     setIsAnalyzing(true);
     setProgress(0);
     setStage("Starting Analysis...");
+    setLogs([]);
+
+    /*
+    ==========================================
+    FUTURE BACKEND INTEGRATION
+    ==========================================
+
+    When integrating with the Python backend:
+
+    1️⃣ Send request to backend to start the job
+
+        POST /start-job
+
+        Example:
+
+        fetch("/start-job", {
+          method: "POST"
+        })
+        .then(res => res.json())
+        .then(data => {
+            setJobId(data.job_id)
+        })
+
+    2️⃣ Backend will start packet capture + ML pipeline
+
+        capture packets (10s)
+        preprocessing
+        primary model layer
+        secondary layer
+        fallback layer
+        logging
+
+    3️⃣ Frontend should periodically check job progress
+
+        GET /job-status/{job_id}
+
+    4️⃣ Response format example
+
+        {
+          stage: "Primary Layer Analysis...",
+          progress: 56
+        }
+
+    5️⃣ Replace the simulation interval below with
+       polling or websocket updates.
+
+    ==========================================
+    */
+
+    // STARTUP LOGS WITH DELAY
+    setTimeout(() => {
+      addLog("System boot sequence completed");
+    }, 200);
+
+    setTimeout(() => {
+      addLog("Network interface initialized");
+    }, 600);
+
+    setTimeout(() => {
+      addLog("Awaiting packet capture...");
+    }, 1000);
 
     let i = 0;
 
     intervalRef.current = setInterval(() => {
       const currentStage = stages[i];
+
       setStage(currentStage.name);
       setProgress(currentStage.progress);
+
+      addLog(currentStage.name);
+
+      if (currentStage.name === "Capturing Packets...") {
+        addLog("Listening on network interface eth0");
+      }
+
+      if (currentStage.name === "Preprocessing the captured Packets...") {
+        addLog("Extracting packet features");
+      }
+
+      if (currentStage.name === "Primary Layer Analysis...") {
+        addLog("Running neural classification layer");
+      }
+
+      if (currentStage.name === "Secondary Layer Analysis...") {
+        addLog("Secondary verification triggered");
+      }
+
+      if (currentStage.name === "Checking for fallback...") {
+        addLog("Evaluating fallback decision rules");
+      }
+
+      if (currentStage.name === "Logging...") {
+        addLog("Saving analysis to system logs");
+      }
 
       i++;
 
       if (i === stages.length) {
         clearInterval(intervalRef.current);
 
-        // FUTURE BACKEND INTEGRATION
-        // Fetch result from backend using job_id
-        // fetch(`/result/${job_id}`)
-        //   .then(res => res.json())
-        //   .then(data => setResult(data))
+        /*
+        ==========================================
+        FUTURE BACKEND INTEGRATION
+        ==========================================
+
+        After pipeline finishes, fetch result:
+
+        GET /result/{job_id}
+
+        Example response:
+
+        {
+          prediction: "Benign Traffic",
+          confidence: "98.7%",
+          packetsAnalyzed: "24842",
+          threatLevel: "Low"
+        }
+
+        Replace the simulated result below with
+        actual backend response.
+        */
 
         setResult({
           prediction: "Benign Traffic",
           confidence: "98.7%",
           packetsAnalyzed: "24,842",
-          threatLevel: "Low"
+          threatLevel: "Low",
         });
 
-        // Add a slight delay at 100% so the user sees the bar fill up
         setTimeout(() => {
           setPage("result");
           setIsAnalyzing(false);
@@ -83,14 +201,20 @@ export default function App() {
           <h1 className="title">Intrusion Detection System</h1>
 
           <div className="panel">
-            <p className="subtitle">Real-time network traffic analysis and threat prevention.</p>
+            <p className="subtitle">
+              Real-time network traffic analysis and threat prevention.
+            </p>
 
-            <button 
-              className={`action-btn primary-btn ${isAnalyzing ? "processing" : "pulse-anim"}`} 
+            <button
+              className={`action-btn primary-btn ${
+                isAnalyzing ? "processing" : "pulse-anim"
+              }`}
               onClick={startSimulation}
               disabled={isAnalyzing}
             >
-              {isAnalyzing ? "Analysis in Progress..." : "Start Packet Capture"}
+              {isAnalyzing
+                ? "Analysis in Progress..."
+                : "Start Packet Capture"}
             </button>
 
             <div className={`progressSection ${isAnalyzing ? "active" : ""}`}>
@@ -101,9 +225,28 @@ export default function App() {
 
               <div className="progressBar">
                 <div
-                  className={`progressFill ${isAnalyzing ? "striped-animated" : ""}`}
+                  className={`progressFill ${
+                    isAnalyzing ? "striped-animated" : ""
+                  }`}
                   style={{ width: progress + "%" }}
                 ></div>
+              </div>
+            </div>
+
+            {/* LOGGER PANEL */}
+            {/* FUTURE BACKEND INTEGRATION
+                Backend may also stream logs using WebSockets
+                Example endpoint: ws://server/log-stream
+            */}
+            <div className="logPanel">
+              <div className="logHeader">System Logs</div>
+
+              <div className="logConsole" ref={logConsoleRef}>
+                {logs.map((log, index) => (
+                  <div key={index} className="logLine">
+                    {log}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -116,13 +259,16 @@ export default function App() {
 
           <div className="panel">
             <div className="result-grid">
-              
-              {/* FUTURE BACKEND DATA DISPLAY */}
-              {/* Replace these fields with actual JSON response */}
-              
+
+              {/* FUTURE BACKEND DATA DISPLAY
+                  Replace with actual JSON fields returned by ML model
+              */}
+
               <div className="resultRow">
                 <span className="label">Status Prediction</span>
-                <span className="value status-safe">{result.prediction}</span>
+                <span className="value status-safe">
+                  {result.prediction}
+                </span>
               </div>
 
               <div className="resultRow">
@@ -141,12 +287,13 @@ export default function App() {
               </div>
             </div>
 
-            <button 
-              className="action-btn secondary-btn" 
+            <button
+              className="action-btn secondary-btn"
               onClick={() => {
                 setProgress(0);
                 setStage("System Ready");
                 setPage("home");
+                setLogs([]);
               }}
             >
               Run New Analysis
