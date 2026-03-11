@@ -1,42 +1,310 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+:root {
+  --primary: #8b5cf6; /* Vibrant Purple from image */
+  --primary-glow: #06b6d4; /* Cyan accent */
+  --primary-hover: #7c3aed;
+
+
+
+--text-main: #1f2937;
+
+--text-muted: #0c0d0e;
+
+--safe-color: #10b981;
+
+--border-color: rgba(255, 255, 255, 0.3); /* Softer border for glass */
+}
+/* Replace your existing .panel class with this: */
+.panel {
+  /* Glassmorphism Core */
+  background: rgba(255, 248, 248, 0.25); /* High transparency */
+  backdrop-filter: blur(16px); /* Strong blur for the frosted effect */
+  -webkit-backdrop-filter: blur(16px); /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Highlighted glass edge */
+  
+  /* Layout & Shadows */
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 8px 32px 0 rgba(243, 243, 248, 0.15); /* Smooth, deep shadow */
+}
+
+/* Replace your existing .result-grid class with this: */
+.result-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  
+  /* Nested Glass Effect */
+  background: rgba(255, 255, 255,0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Apply visual background with light grey feel: */
+  background-color: #f3f4f6; /* Base solid grey light background */
+  background-image: url('./assets/bg.png'); /* Integrated image_0.png */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* End applied background */
+
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 750px;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-.card {
-  padding: 2em;
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.read-the-docs {
-  color: #888;
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  margin-bottom: 30px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for text depth */
+}
+
+.subtitle {
+  color: var(--text-muted);
+  margin-top: -10px;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+
+/* Buttons */
+.action-btn {
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  letter-spacing: 0.5px;
+}
+
+/* Buttons */
+.primary-btn {
+  background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+  transform: translateY(-2px) scale(1.02);
+}
+.secondary-btn {
+  background: var(--text-main);
+  color: white;
+  margin-top: 40px;
+}
+
+.secondary-btn:hover {
+  background: #000;
+  transform: translateY(-2px);
+}
+
+.action-btn:disabled, .processing {
+  background: var(--text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Button Pulse Animation */
+.pulse-anim {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+/* Progress Section */
+.progressSection {
+  margin-top: 40px;
+  opacity: 0.4;
+  transition: opacity 0.5s ease;
+}
+
+.progressSection.active {
+  opacity: 1;
+}
+
+.stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.stageText {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.percent {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Progress Bar & Glowing Sprinkle Effect */
+.progressBar {
+  width: 100%;
+  height: 20px; /* Slimmer, more modern */
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50px;
+  overflow: visible; /* Changed to visible to let glow/sprinkles show */
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+  border-radius: 50px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+}
+
+@keyframes moveStripes {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+/* Results Display */
+.resultRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--border-color);
+  font-size: 16px;
+}
+
+.resultRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.value {
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.status-safe {
+  color: var(--safe-color);
+  background: rgba(16, 185, 129, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 15px;
+}
+
+/* The Glowing Sprinkle/Sparkle at the end of the progress bar */
+.progressFill::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  /* Glowing sprinkle effect */
+  box-shadow: 
+    0 0 10px #fff, 
+    0 0 20px #06b6d4, 
+    0 0 30px #06b6d4,
+    -10px 5px 8px rgba(6, 182, 212, 0.4),
+    -15px -8px 6px rgba(139, 92, 246, 0.4);
+  filter: blur(0.5px);
+  animation: sprinklePulse 1.5s infinite ease-in-out;
+}
+
+@keyframes sprinklePulse {
+  0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+  50% { transform: translateY(-50%) scale(1.4); opacity: 0.8; }
+}
+
+.striped-animated {
+  /* We define the background color as the base, then overlay the stripes */
+  background-color: rgba(139, 92, 246, 0.8); /* Purple Base */
+  
+  background-image: linear-gradient(
+    45deg,
+    rgba(6, 182, 212, 0.8) 25%,   /* Cyan Stripe starts */
+    transparent 25%,             /* Toggle to Base Purple */
+    transparent 50%, 
+    rgba(6, 182, 212, 0.8) 50%,   /* Cyan Stripe starts again */
+    rgba(6, 182, 212, 0.8) 75%, 
+    transparent 75%,             /* Toggle to Base Purple */
+    transparent
+  );
+  
+  background-size: 40px 40px;
+  animation: moveStripes 1s linear infinite;
+}
+
+.percent {
+  color: #1f2937;
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
 }
