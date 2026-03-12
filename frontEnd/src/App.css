@@ -3,16 +3,12 @@
   --primary-glow: #06b6d4; /* Cyan accent */
   --primary-hover: #7c3aed;
 
-
-
---text-main: #1f2937;
-
---text-muted: #0c0d0e;
-
---safe-color: #10b981;
-
---border-color: rgba(255, 255, 255, 0.3); /* Softer border for glass */
+  --text-main: #1f2937;
+  --text-muted: #0c0d0e;
+  --safe-color: #10b981;
+  --border-color: rgba(255, 255, 255, 0.3); /* Softer border for glass */
 }
+
 /* Replace your existing .panel class with this: */
 .panel {
   /* Glassmorphism Core */
@@ -20,7 +16,7 @@
   backdrop-filter: blur(16px); /* Strong blur for the frosted effect */
   -webkit-backdrop-filter: blur(16px); /* Safari support */
   border: 1px solid rgba(255, 255, 255, 0.5); /* Highlighted glass edge */
-  
+
   /* Layout & Shadows */
   border-radius: 20px;
   padding: 50px;
@@ -32,12 +28,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  
+
   /* Nested Glass Effect */
-  background: rgba(255, 255, 255,0.7);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  
+
   padding: 30px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -45,11 +41,15 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+
   /* Apply visual background with light grey feel: */
   background-color: #f3f4f6; /* Base solid grey light background */
-  background-image: url('./assets/bg.png'); /* Integrated image_0.png */
+  background-image: url("./assets/bg.png"); /* Integrated image_0.png */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -85,13 +85,25 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .title {
@@ -100,7 +112,7 @@ body {
   letter-spacing: -0.5px;
   color: var(--text-main);
   margin-bottom: 30px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for text depth */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for text depth */
 }
 
 .subtitle {
@@ -109,7 +121,6 @@ body {
   margin-bottom: 30px;
   font-size: 16px;
 }
-
 
 /* Buttons */
 .action-btn {
@@ -151,7 +162,8 @@ body {
   transform: translateY(-2px);
 }
 
-.action-btn:disabled, .processing {
+.action-btn:disabled,
+.processing {
   background: var(--text-muted);
   cursor: not-allowed;
   box-shadow: none;
@@ -164,9 +176,15 @@ body {
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
-  70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
 }
 
 /* Progress Section */
@@ -220,8 +238,12 @@ body {
 }
 
 @keyframes moveStripes {
-  0% { background-position: 0 0; }
-  100% { background-position: 40px 40px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
 }
 
 /* Results Display */
@@ -260,7 +282,7 @@ body {
 
 /* The Glowing Sprinkle/Sparkle at the end of the progress bar */
 .progressFill::after {
-  content: '';
+  content: "";
   position: absolute;
   right: -5px;
   top: 50%;
@@ -270,9 +292,9 @@ body {
   background: #fff;
   border-radius: 50%;
   /* Glowing sprinkle effect */
-  box-shadow: 
-    0 0 10px #fff, 
-    0 0 20px #06b6d4, 
+  box-shadow:
+    0 0 10px #fff,
+    0 0 20px #06b6d4,
     0 0 30px #06b6d4,
     -10px 5px 8px rgba(6, 182, 212, 0.4),
     -15px -8px 6px rgba(139, 92, 246, 0.4);
@@ -281,25 +303,32 @@ body {
 }
 
 @keyframes sprinklePulse {
-  0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
-  50% { transform: translateY(-50%) scale(1.4); opacity: 0.8; }
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.4);
+    opacity: 0.8;
+  }
 }
 
 .striped-animated {
   /* We define the background color as the base, then overlay the stripes */
   background-color: rgba(139, 92, 246, 0.8); /* Purple Base */
-  
+
   background-image: linear-gradient(
     45deg,
-    rgba(6, 182, 212, 0.8) 25%,   /* Cyan Stripe starts */
-    transparent 25%,             /* Toggle to Base Purple */
-    transparent 50%, 
-    rgba(6, 182, 212, 0.8) 50%,   /* Cyan Stripe starts again */
-    rgba(6, 182, 212, 0.8) 75%, 
-    transparent 75%,             /* Toggle to Base Purple */
-    transparent
+    rgba(6, 182, 212, 0.8) 25%,
+    /* Cyan Stripe starts */ transparent 25%,
+    /* Toggle to Base Purple */ transparent 50%,
+    rgba(6, 182, 212, 0.8) 50%,
+    /* Cyan Stripe starts again */ rgba(6, 182, 212, 0.8) 75%,
+    transparent 75%,
+    /* Toggle to Base Purple */ transparent
   );
-  
+
   background-size: 40px 40px;
   animation: moveStripes 1s linear infinite;
 }
@@ -313,36 +342,63 @@ body {
 /* SYSTEM LOG CONSOLE STYLE  */
 /* ========================= */
 
-.logPanel{
-  margin-top:30px;
-  text-align:left;
+.logPanel {
+  margin-top: 30px;
+  text-align: left;
 }
 
-.logHeader{
-  font-weight:700;
-  margin-bottom:10px;
-  color:#1f2937;
+.logHeader {
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #1f2937;
 }
-.logConsole{
-  background:#0f172a;
-  color:#22c55e;
-  font-family:monospace;
-  font-size:13px;
-  padding:15px;
-  border-radius:8px;
-  height:150px;
-  overflow-y:auto;
-  border:1px solid rgba(255,255,255,0.15);
+.logConsole {
+  background: #0f172a;
+  color: #22c55e;
+  font-family: monospace;
+  font-size: 13px;
+  padding: 15px;
+  border-radius: 8px;
+  height: 150px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 
   /* Hide scrollbar */
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none;     /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
 }
 
 .logConsole::-webkit-scrollbar {
-  display: none;                /* Chrome, Safari */
+  display: none; /* Chrome, Safari */
 }
 
-.logLine{
-  margin-bottom:4px;
+.logLine {
+  margin-bottom: 4px;
+}
+
+/* ========================= */
+/* NEW ADDITIONS BELOW       */
+/* ========================= */
+
+.status-danger {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 15px;
+}
+
+.status-warning {
+  color: #ffd700;
+  background: #111111;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 15px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 30px;
 }
